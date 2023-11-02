@@ -20,7 +20,7 @@ const Services = () => {
         <div>
         <div className="grid lg:grid-cols-3 gap-5 my-5 ">
             {
-                service.map(services=><Servicecard key={services.id} services={services}> 
+                service.map(services=><Servicecard key={services._id} services={services}> 
 
                 </Servicecard>)
             }

@@ -2,17 +2,23 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Authentication/Authprovider";
 import Navbar from "../Component/Navbar";
 import Bookingsshow from "./Bookingsshow";
+import axios from "axios";
 
 
 const Bookings = () => {
     const {user}=useContext(AuthContext)
     const [bookings,setbookings]=useState([])
-    const [remaining,setremaining]=useState()
+    // const [remaining,setremaining]=useState()
     const url=`http://localhost:5000/bookings?email=${user?.email}`
     useEffect(()=>{
-        fetch(url)
-        .then(res=>res.json())
-        .then(data=>setbookings(data))
+
+      axios.get(url,{withCredentials:true})
+      .then(res=>{
+        setbookings(res.data)
+      })
+        // fetch(url)
+        // .then(res=>res.json())
+        // .then(data=>setbookings(data))
     },[url])
 
     const handledelte=id=>{
