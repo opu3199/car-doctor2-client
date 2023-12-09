@@ -3,28 +3,32 @@ import { AuthContext } from "../Authentication/Authprovider";
 import Navbar from "../Component/Navbar";
 import Bookingsshow from "./Bookingsshow";
 import axios from "axios";
+import UseAxios from "../Hook/UseAxios";
 
 
 const Bookings = () => {
     const {user}=useContext(AuthContext)
     const [bookings,setbookings]=useState([])
-    // const [remaining,setremaining]=useState()
-    const url=`http://localhost:5000/bookings?email=${user?.email}`
+    const axiossecure=UseAxios()
+    // const url=`http://localhost:5000/bookings?email=${user?.email}`
+     const url=`/bookings?email=${user?.email}`
     useEffect(()=>{
 
-      axios.get(url,{withCredentials:true})
-      .then(res=>{
+      // axios.get(url,{withCredentials:true})
+      // .then(res=>{
+      //   setbookings(res.data)
+      // })
+
+       axiossecure.get(url)
+       .then(res=>{
         setbookings(res.data)
-      })
-        // fetch(url)
-        // .then(res=>res.json())
-        // .then(data=>setbookings(data))
-    },[url])
+       })
+    },[url,axiossecure])
 
     const handledelte=id=>{
       const proceed=confirm('are you sure to delete')
       if(proceed){
-        fetch(`http://localhost:5000/bookings/${id}`,{
+        fetch(`https://car-doctor2-server.vercel.app/bookings/${id}`,{
           method:'DELETE'
         })
         .then(res=>res.json())
@@ -40,7 +44,7 @@ const Bookings = () => {
     }
 
     const handleupdate=id=>{
-      fetch(`http://localhost:5000/bookings/${id}`,{
+      fetch(`https://car-doctor2-server.vercel.app/bookings/${id}`,{
         method:'PATCH',
         headers:{
           'content-type':'application/json'

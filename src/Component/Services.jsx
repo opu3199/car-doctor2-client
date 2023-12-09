@@ -1,15 +1,11 @@
-import { useEffect, useState } from "react";
+
+import Useservices from "../Hook/Useservices";
 import Servicecard from "./Servicecard";
 
 const Services = () => {
 
-    const[service,setservice]=useState([])
+    const service=Useservices()
 
-    useEffect(()=>{
-        fetch('http://localhost:5000/services')
-        .then(res=>res.json())
-        .then(data=>setservice(data))
-    },[])
     return (
         <div>
         <div className="text-center space-y-5 mb-10">
